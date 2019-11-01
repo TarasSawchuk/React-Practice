@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import './Components/Input/Input';
+import './Components/ToDoList/ToDoList';
+import {ToDoList} from "./Components/ToDoList/ToDoList";
+import {Input} from "./Components/Input/Input";
 
 class App extends Component {
     constructor(props) {
@@ -8,42 +12,44 @@ class App extends Component {
             newItem:"",
             list:[]
         }
+    };
+
+    render() {
+        return(
+            <div className="App">
+                <Input />
+                <ToDoList/>
+            </div>
+        );
     }
+
     updateInput(key, value){
-        this.setState({})
-    }
+        this.setState({[key]:value});
+    };
+
     addItem(){
         const newItem = {
             id: 1 + Math.random(),
             value: this.state.newItem.slice()
         };
 
-        const list = [... this.state.state.list];
+        const list = [...this.state.list];
 
         list.push(newItem);
 
         this.setState({
-        list,
-        newItem:""
+            list,
+            newItem:""
         });
-    }
+    };
 
-    render() {
-        return(
-            <div className="App">
-                <div>
-                    Add an item...
-                    <br/>
-                    <input type="text"
-                           placeholder="Type item here..."
-                           value={this.state.newItem}
-                           onChange={e => this.updateInput("newItem", e.target.value)}
-                    />
-                    <button onClick={() => this.addItem()}>Add</button>
-                </div>
-            </div>
-        );
-    }
+    deleteItem(id){
+        const list = [...this.state.list];
+        const updList = list.filter(item => item.id !== id);
+
+        this.setState({list: updList});
+    };
+
 }
 
 export default App;
